@@ -1,3 +1,4 @@
+<?php
 /**
  * Kizano/Misc.php
  *
