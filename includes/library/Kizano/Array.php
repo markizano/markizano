@@ -1,6 +1,6 @@
 <?php
 /**
- * Kizano/Misc.php
+ * Kizano/Array.php
  *
  * PHP version 5.*
  *
