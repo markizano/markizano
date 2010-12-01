@@ -38,7 +38,7 @@ class Kizano_Array
 {
 
     /**
-     *  Behaves similar to array_merge in that it will merge two or more arrays, except it checks
+     *  Behaves similarly to array_merge in that it will merge two or more arrays, except it checks
      *  for existing keys and attempts to overwrite them instead of appending them. Also, working with
      *  array_merge and numeric keys provided unexpected and undesired results. The primary reason
      *  this function was created to provide a more stable way of merging two or more arrays and make
@@ -92,7 +92,11 @@ class Kizano_Array
                 foreach ($arrays as $a => $array) {
                     if (is_array($array)) {
                         $me = __FUNCTION__;
-                        $result[$a] = self::$me($result[$a], $array);
+                        if (isset($result[$a])) {
+                            $result[$a] = self::$me($result[$a], $array);
+                        } else {
+                            $result[$a] = $array;
+                        }
                     } else {
                         $result[$a] = $array;
                     }
@@ -105,7 +109,7 @@ class Kizano_Array
     /**
      *  Cuts an array in half and returns the halves as an array.
      *  @param array            Array   The array to split.
-     *  @param preserve_keys    Boolean Weather to preserve the keys in the original array.
+     *  @param preserve_keys    Boolean Whether to preserve the keys in the original array.
      *  @return array
      */
     public static function half($array, $preserve_keys = false)
@@ -117,4 +121,3 @@ class Kizano_Array
         );
     }
 }
-
