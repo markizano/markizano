@@ -6,7 +6,7 @@
  *	@Description: The class Extension that drives the rendering scheme
  *	@Notes: Edit with care
  *	
- *	OSASH: Online services Auction SuperHighway
+ *	Kizano: ZF-Friendly library extensions.
  *	@CopyRight: (c) 2010 Markizano Draconus <markizano@markizano.net>
  */
 

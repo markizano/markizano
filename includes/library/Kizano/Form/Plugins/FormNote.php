@@ -6,14 +6,14 @@
  *	@Description: Plain static text element.
  *	@Notes: Edit with care
  *	
- *	OSASH: Online Services Auction SuperHighway
+ *	Kizano: ZF-Friendly library extensions.
  *	@CopyRight: (c) 2010 Markizano Draconus <markizano@markizano.net>
  */
 
 /**
  *	Form plugin to represent plain text.
  */
-class Kizano_Forms_Plugins_FormNote extends Zend_View_Helper_FormElement{
+class Kizano_Form_Plugins_FormNote extends Zend_View_Helper_FormElement{
 
 	/**
 	 *	Initializes this plugin... does nothing...

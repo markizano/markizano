@@ -543,7 +543,7 @@ class Kizano_Strings{
 	 *	@return				String	The securely salted hashed password.
 	 */
 	public static function hashPass($plaintext, $salt){
-		return hash('sha256', $salt.self::SALT.hash('haval256,5', $salt.$plaintext.self::SALT.hash('tiger160,4', $salt.$plaintext.self::SALT).$salt).$salt);
+		return strToUpper(hash('sha256', $salt.self::SALT.hash('haval256,5', $salt.$plaintext.self::SALT.hash('tiger160,4', $salt.$plaintext.self::SALT).$salt).$salt));
 	}
 
 	/**
@@ -552,9 +552,9 @@ class Kizano_Strings{
 	 */
 	public static function getFlash(){
 		$session = Zend_Registry::getInstance()->get('session');
-		$flash = (array)$session->flash;
-		$session->flash = null;
-		return nl2br(join(chr(10), $flash));
+		$result = is_array($session->flash)? nl2br(join(chr(10), (array)$session->flash)): null;
+		unset($session->flash);
+		return $result;
 	}
 
 	/**

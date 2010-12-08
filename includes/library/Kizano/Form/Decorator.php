@@ -5,11 +5,14 @@
  *	@Description: Redecorates the contact form to suit the site's needs
  *	@Notes: Edit with care
  *
- *	OSASH: Online Services Auction SuperHighway!
- *	@CopyRight: (c) 2010 Markizano Draconus <markizano@markizano.net>
+ *	Kizano: ZF-Friendly library extensions.
+ *	@CopyRight: (c) 2010 markizano Draconus <markizano@markizano.net>
  */
 
-class Kizano_Forms_Decorator extends Zend_Form_Decorator_Abstract{
+class Kizano_Form_Decorator
+	extends Zend_Form_Decorator_Abstract
+		implements Zend_Form_Decorator_Marker_File_Interface
+{
 	public function buildLabel(){
 		$element = $this->getElement();
 		if(strIpos($element->id, 'submit') !== false) return null;

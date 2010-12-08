@@ -8,7 +8,7 @@
  *	@Notes: All methods in this class assume the first primary identifier as defined
  *			by the configuration.
  *	
- *	OSASH: Online Services Auction SuperHighway
+ *	Kizano: ZF-Friendly library extensions
  *	@CopyRight: (c) 2010 Markizano Draconus <markizano@markizano.net>
  */
 
