@@ -38,46 +38,124 @@ class Kizano_Array
 {
 
     /**
-     *  Behaves similarly to array_merge in that it will merge two or more arrays, except it checks
+     *  Behaves similarly to array_merge and + in that it will merge two or more arrays, except it checks
      *  for existing keys and attempts to overwrite them instead of appending them. Also, working with
      *  array_merge and numeric keys provided unexpected and undesired results. The primary reason
      *  this function was created to provide a more stable way of merging two or more arrays and make
      *  their values overwrite one another instead of appending as with array_merge().
+     *  The advantage to using this function over the + operator is that the values of the array will
+     *  be preserved as well.
      *  http://php.net/manual/en/function.array-merge.php
      *  @Example:
      *      <?php
      *      
-     *      $numbers = array(
-     *          0 => 'zero',
-     *          1 => 'one',
-     *          2 => 'two',
-     *          3 => 'three',
-     *          4 => 'four',
-     *          5 => 'five',
+     *      $defaults = array(
+     *        array(
+     *          'view' => false,
+     *          'edit' => false,
+     *        ),
+     *        array(
+     *          'view' => false,
+     *          'edit' => false,
+     *        ),
+     *        array(
+     *          'view' => false,
+     *          'edit' => false,
+     *        ),
+     *        array(
+     *          'view' => false,
+     *          'edit' => false,
+     *        ),
      *      );
      *      
-     *      $nums => array(
-     *          2 => '2',
-     *          3 => '3',
-     *          4 => '4',
+     *      $user = array(
+     *        2 => array(
+     *          'view' => true,
+     *        ),
+     *        3 => array(
+     *          'edit' => true,
+     *        )
      *      );
      *      
-     *      var_dump(array_merge($numbers, $nums));
+     *      var_dump(Kizano_Array::merge($defaults, $user));
+     *      var_dump(array_merge($defaults, $user));
+     *      var_dump($user + $defaults);
      *      ?>
      *      
      *      array
-     *          0 => string '2' (length=1)
-     *          1 => string '3' (length=1)
-     *          2 => string '4' (length=1)
-     *          3 => string 'three' (length=5)
-     *          4 => string 'four' (length=4)
-     *          5 => string 'five' (length=4)
+     *        0 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        1 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        2 => 
+     *          array
+     *            'view' => boolean true
+     *            'edit' => boolean false
+     *        3 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean true
+     *      
+     *      array
+     *        0 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        1 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        2 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        3 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        4 => 
+     *          array
+     *            'view' => boolean true
+     *        5 => 
+     *          array
+     *            'edit' => boolean true
+     *      
+     *      array
+     *        2 => 
+     *          array
+     *            'view' => boolean true
+     *        3 => 
+     *          array
+     *            'edit' => boolean true
+     *        0 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
+     *        1 => 
+     *          array
+     *            'view' => boolean false
+     *            'edit' => boolean false
      *  
      *  @notes  As you can see in the code example above, array_merge will first re-order the keys
-     *      of the provided arrays, and then attempt to merge them if they are numeric, however for
-     *      the purposes of some functions in this application, particularly /admin/page-permissions,
-     *      we need the keys to be overwritten instead of re-ordered. This function accomplishes this
-     *      task without too much overhead.
+     *      of the provided arrays, and then attempt to merge them if they are numeric; however,
+     *      we need the keys to be overwritten without special treatment instead of re-ordered in
+     *      any fashion.
+     *      In addition, the + operator does not generate the desired results because of the
+     *      following points:
+     *          - It does not return the array in any ordered fashion.
+     *          - It overwrites the target result with the array added to the defaults entirely.
+     *          - It does not preserve the original values in the default array.
+     *      The array_merge() function does not return the desired results because of the following
+     *      reasons:
+     *          - It re-orders the keys of the array if the provided arrays are numeric.
+     *          - If using numeric keys, the values of the arrays are appended instead of overwritten.
+     *          - It overwrites the default value with the target value.
+     *
+     *      This function was so heavily documented because of a lot of discussion over its purpose.
      *  
      *  @param-list     arrays to merge
      *  @return array
@@ -87,19 +165,19 @@ class Kizano_Array
         $result = array();
         # For each of the arguments passed into this function
         foreach (func_get_args() as $arrays) {
-            if (is_array($arrays) && count($arrays)) {
-                # Process each argument as if it were an array
-                foreach ($arrays as $a => $array) {
-                    if (is_array($array)) {
-                        $me = __FUNCTION__;
-                        if (isset($result[$a])) {
-                            $result[$a] = self::$me($result[$a], $array);
-                        } else {
-                            $result[$a] = $array;
-                        }
+            if (!is_array($arrays) || empty($arrays)) {
+                continue;
+            }
+            # Process each argument as if it were an array
+            foreach ($arrays as $a => $array) {
+                if (is_array($array)) {
+                    if (isset($result[$a]) && is_array($result[$a])) {
+                        $result[$a] = self::merge($result[$a], $array);
                     } else {
-                        $result[$a] = $array;
+                       $result[$a] = self::merge($array);
                     }
+                } else {
+                    $result[$a] = $array;
                 }
             }
         }
@@ -121,3 +199,4 @@ class Kizano_Array
         );
     }
 }
+
