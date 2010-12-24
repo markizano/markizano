@@ -31,10 +31,8 @@
 /**
  * Interface for generating lipsums on the fly
  *
- * @category   Cb
- * @package    Cb_Service
- * @license   http://www.integraclick.com Integraclick License
- * @link      http://adgenii.clickbooth.com
+ * @category   Kizano
+ * @package    Kizano_Service
  */
 class Kizano_Service_Lipsum
 {
