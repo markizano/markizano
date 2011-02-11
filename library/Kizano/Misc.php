@@ -2,7 +2,7 @@
 /**
  * Kizano/Misc.php
  *
- * PHP version 5.*
+ * PHP version 5
  *
  * Namespace placeholder for functions that would normally be free-floating.
  * Copyright (C) 2010 Markizano Draconus <markizano@markizano.net>
@@ -23,29 +23,29 @@
  * @category  Kizano
  * @package   Miscelaneous
  * @author    Markizano Draconus <markizano@markizano.net>
- * @copyright 2010 Integraclick Inc.
  * @license   http://www.gnu.org/licenses/gpl.html GNU Public License
  * @link      https://github.com/markizano/markizano/blob/master/includes/library/Kizano/Misc.php
  */
-
 
 /**
  *	Namespace for miscelaneous functions that would normally be free-floating.
  *  @author Markizano Draconus <markizano@markizano.net>
  */
-class Kizano_Misc{
+class Kizano_Misc
+{
 	/**
 	 *	Gets a Console-printable string representation of the current backtrace.
 	 *	@return		String	A Console-printable backtrace
 	 */
-	public static function textBacktrace($backtrace = null){
+	public static function textBacktrace($backtrace = null)
+	{
 	    if ($backtrace === null) {
     		$backtrace = self::backtrace();
     		array_shift($backtrace);
 		}
 		$result = null;
-		if(count($backtrace))
-			foreach($backtrace as $back){
+		if (count($backtrace))
+			foreach ($backtrace as $back) {
 				isset($back['class']) || $back['class'] = 'Static';
 				isset($back['type']) || $back['type'] = '::';
 				$result .= "<$back[file]:$back[line]> ".
@@ -53,37 +53,37 @@ class Kizano_Misc{
 					"$back[function]("
 				;
 				$comma = false;
-				if(count($back['args']))
-					foreach($back['args'] as $args){
+				if (count($back['args']))
+					foreach ($back['args'] as $args) {
 						$result .= $comma? ', ': null;
 						$comma || $comma = true;
-						if(is_string($args)){
+						if (is_string($args)) {
 							$result .= "'$args'";
-						}elseif(is_numeric($args)){
+						} elseif (is_numeric($args)) {
 							$type = gettype($args);
 							$result .= "($type) $args";
-						}elseif(is_array($args)){
+						} elseif (is_array($args)) {
 						    $args = print_r($args, true);
 							$result .= "(array) $args";
-						}elseif(is_object($args)){
+						} elseif (is_object($args)) {
 							$type = gettype($args);
-							if(is_callable(array($args, '__toString'))){
+							if (is_callable(array($args, '__toString'))) {
 								$args = $args->__toString();
-							}else{
+							} else{
 								$args = get_class($args);
 							}
 							$result .= "($type) $args";
-						}elseif(is_bool($args)){
+						} elseif (is_bool($args)) {
 							$args = $args? 'true': 'false';
 							$result .= "(boolean) $args";
-						}elseif(is_null($args)){
+						} elseif (is_null($args)) {
 							$result .= "null";
-						}else{
+						} else{
 							$type = gettype($args);
 							$result .= "($type) [object]";
 						}
 					}
-				$result .= ");<br />\n";
+				$result .= ");\n";
 			}
 		return $result;
 	}
@@ -92,15 +92,16 @@ class Kizano_Misc{
 	 *	Gets a Console-printable string representation of the current backtrace.
 	 *	@return		String	A Console-printable backtrace
 	 */
-	public static function consoleBacktrace($backtrace = null){
+	public static function consoleBacktrace($backtrace = null)
+	{
 	    defined('STDOUT') || define('STDOUT', fOpen('php://stdout', 'a'));
 	    if ($backtrace === null) {
     		$backtrace = self::backtrace();
     		array_shift($backtrace);
 		}
 		$result = null;
-		if(count($backtrace))
-			foreach($backtrace as $back){
+		if (count($backtrace))
+			foreach ($backtrace as $back) {
 				isset($back['class']) || $back['class'] = 'Static';
 				isset($back['type']) || $back['type'] = '::';
 				$result .= "<\033[31m$back[file]\033[00m:\033[01;30m$back[line]\033[00;00m> ".
@@ -108,32 +109,32 @@ class Kizano_Misc{
 					"\033[34m$back[function]\033[00m("
 				;
 				$comma = false;
-				if(count($back['args']))
-					foreach($back['args'] as $args){
+				if (count($back['args']))
+					foreach ($back['args'] as $args) {
 						$result .= $comma? ', ': null;
 						$comma || $comma = true;
-						if(is_string($args)){
+						if (is_string($args)) {
 							$result .= "\033[31m'$args'\033[00m";
-						}elseif(is_numeric($args)){
+						} elseif (is_numeric($args)) {
 							$type = gettype($args);
 							$result .= "(\033[32m$type\033[00m) $args";
-						}elseif(is_array($args)){
+						} elseif (is_array($args)) {
 						    $args = print_r($args, true);
 							$result .= "(\033[32marray\033[00m) $args";
-						}elseif(is_object($args)){
+						} elseif (is_object($args)) {
 							$type = gettype($args);
-							if(is_callable(array($args, '__toString'))){
+							if (is_callable(array($args, '__toString'))) {
 								$args = $args->__toString();
-							}else{
+							} else{
 								$args = get_class($args);
 							}
 							$result .= "(\033[32m$type\033[00m) $args";
-						}elseif(is_bool($args)){
+						} elseif (is_bool($args)) {
 							$args = $args? 'true': 'false';
 							$result .= "(\033[32mboolean\033[00m) $args";
-						}elseif(is_null($args)){
+						} elseif (is_null($args)) {
 							$result .= "\033[31mnull\033[00m";
-						}else{
+						} else{
 							$type = gettype($args);
 							$result .= "(\033[32m$type\033[00m) [object]";
 						}
@@ -147,14 +148,15 @@ class Kizano_Misc{
 	 *	Gets a HTML-printable string representation of the current backtrace.
 	 *	@return		String	A HTML-printable backtrace
 	 */
-	public static function htmlBacktrace($backtrace = null){
+	public static function htmlBacktrace($backtrace = null)
+	{
 	    if ($backtrace === null) {
     		$backtrace = self::backtrace();
     		array_shift($backtrace);
 		}
 		$result = null;
-		if(count($backtrace))
-			foreach($backtrace as $back){
+		if (count($backtrace))
+			foreach ($backtrace as $back) {
 				isset($back['class']) || $back['class'] = 'Static';
 				isset($back['type']) || $back['type'] = '::';
 				$result .= "&lt;<span style='color:#CC0000;'>$back[file]</span>:$back[line]&gt;&nbsp;".
@@ -162,33 +164,33 @@ class Kizano_Misc{
 					"<span style='color:#0000AA;'>$back[function]</span>("
 				;
 				$comma = false;
-				if(count($back['args']))
-					foreach($back['args'] as $args){
+				if (count($back['args']))
+					foreach ($back['args'] as $args) {
 						$result .= $comma? ', ': null;
 						$comma || $comma = true;
-						if(is_string($args)){
+						if (is_string($args)) {
 							$result .= "<span style='color:#CC0000;'>'$args'</span>";
-						}elseif(is_numeric($args)){
+						} elseif (is_numeric($args)) {
 							$type = gettype($args);
 							$result .= "(<span style='color:#00CC00;'>$type</span>) $args";
-						}elseif(is_array($args)){
+						} elseif (is_array($args)) {
 							$type = gettype($args);
 							$args = print_r($args, true);
 							$result .= "(<span style='color:#00CC00;'>$type</span>) $args";
-						}elseif(is_object($args)){
+						} elseif (is_object($args)) {
 							$type = gettype($args);
-							if(is_callable(array($args, '__toString'))){
+							if (is_callable(array($args, '__toString'))) {
 								$args = $args->__toString();
-							}else{
+							} else{
 								$args = get_class($args);
 							}
 							$result .= "(<span style='color:#00CC00;'>$type</span>) $args";
-						}elseif(is_bool($args)){
+						} elseif (is_bool($args)) {
 							$args = $args? 'true': 'false';
 							$result .= "(<span style='color:#00CC00;'>boolean</span>) $args";
-						}elseif(is_null($args)){
+						} elseif (is_null($args)) {
 							$result .= "<span style='color:#CC0000;'>null</span>";
-						}else{
+						} else{
 							$type = gettype($args);
 							$result .= "(<span style='color:#00CC00;'>$type</span>) [object]";
 						}
@@ -202,7 +204,8 @@ class Kizano_Misc{
 	 * Returns a custom-created backtrace. One that doesn't include the dumping of irrelevant objects.
 	 * @return	 Array   The [corrected] backtrace
 	 */
-	public static function backtrace(){
+	public static function backtrace()
+	{
 		$debug = debug_backtrace();
 		if (defined('STDOUT')) {
 		    $prefix = "\033[32m";
@@ -212,9 +215,9 @@ class Kizano_Misc{
 		    $suffix = "</span>";
 		}
 		array_shift($debug);
-		foreach($debug as $i => $deb){
+		foreach ($debug as $i => $deb) {
 			unset($debug[$i]['object']);
-			foreach($deb['args'] as $k => $d){
+			foreach ($deb['args'] as $k => $d) {
 				is_object($d) && $debug[$i]['args'][$k] = "({$prefix}object{$suffix})".get_class($d);
 				if (is_array($d)) {
 				    $debug[$i]['args'][$k] = "({$prefix}array{$prefix})\n[\n\t";
