@@ -1,6 +1,36 @@
 <?php
+/**
+ *  Kizano_View_Helper_Notifier
+ *
+ *  LICENSE
+ *
+ *  This source file is subject to the new BSD license that is bundled
+ *  with this package in the file LICENSE.txt.
+ *  It is also available through the world-wide-web at this URL:
+ *  http://framework.zend.com/license/new-bsd
+ *  If you did not receive a copy of the license and are unable to
+ *  obtain it through the world-wide-web, please send an email
+ *  to license@zend.com so we can send you a copy immediately.
+ *
+ *  @category   Kizano
+ *  @package    View
+ *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
+ *  @license    http://framework.zend.com/license/new-bsd     New BSD License
+ *  @author     Markizano Draconus <markizano@markizano.net>
+ */
 
-class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract {
+/**
+ *  View plugin to manage the messages sent off by the models and controllers.
+ *  @note       This class still needs to be refactored.
+ *
+ *  @category   Kizano
+ *  @package    View
+ *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
+ *  @license    http://framework.zend.com/license/new-bsd     New BSD License
+ *  @author     Markizano Draconus <markizano@markizano.net>
+ */
+class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract
+{
 
 	static protected $_storage = null;
 	const INFORMATION = 'information';
@@ -15,8 +45,9 @@ class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract {
 	* @param  string|null $type the namespace to apply this message to it can be completely arbitrary, but three standard ones are defined constants of this class
 	* @return $this
 	*/
-	public function notifier($messages = null, $type = self::INFORMATION ) {
-		if (!empty($messages)){
+	public function notifier($messages = null, $type = self::INFORMATION )
+	{
+		if (!empty($messages)) {
 			$this->addMessage($messages, $type);
 		}//else - user is trying to get notifier to do something else with it
 		return $this;
@@ -31,10 +62,11 @@ class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract {
 	* @param  string|null $type ignored if $messages is an array otherwise it is the namespace to apply this message to.  $type can be completely arbitrary, but three standard ones are defined constants of this class
 	* @return $this
 	*/	
-	public function addMessage($messages, $type = self::INFORMATION){
+	public function addMessage($messages, $type = self::INFORMATION)
+	{
 		//FIFO by group
-		if (is_array($messages)){//assume multiple messages
-			foreach($messages as $type=>$message){
+		if (is_array($messages)) {//assume multiple messages
+			foreach($messages as $type=>$message) {
 				$this->addMessage($message, $type);
 			}
 		} else {
@@ -51,11 +83,12 @@ class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract {
 	* @param  string|null $type the namespace to retieve messages for.
 	* @return array
 	*/	
-	public function getMessages($type = null){
+	public function getMessages($type = null)
+	{
 		//this unsets the namespace (type) once the values are aquired but before they are returned
 		$dataStorage = $this->_getStorage();
 		$messages = $type?$dataStorage->messages[$type]:$dataStorage->messages;
-		if ($type){
+		if ($type) {
 			unset($dataStorage->messages[$type]);
 		} else {
 			unset($dataStorage->messages);
@@ -68,11 +101,13 @@ class Kizano_View_Helper_Notifier extends Zend_View_Helper_Abstract {
 	*
 	* @return Zend_Session_Namespace
 	*/
-	private function _getStorage() {
+	private function _getStorage()
+	{
 		if (!self::$_storage instanceof Zend_Session_Namespace) {
 		  $className = get_class($this);
 		  self::$_storage = new Zend_Session_Namespace($className);
 		}
+
 		return self::$_storage;
 	}
 }

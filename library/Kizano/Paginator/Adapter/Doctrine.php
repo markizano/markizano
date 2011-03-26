@@ -113,3 +113,4 @@ class Kizano_Paginator_Adapter_Doctrine implements Zend_Paginator_Adapter_Interf
 		$this->_query = $query;
 	}
 }
+

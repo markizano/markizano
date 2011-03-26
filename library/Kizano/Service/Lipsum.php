@@ -70,3 +70,4 @@ class Kizano_Service_Lipsum
         return $lipsum;
     }
 }
+

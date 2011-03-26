@@ -9,6 +9,7 @@ print $this->doctype();
         <script type="text/javascript"> </script>
 <?php
     $this->headLink()
+        ->appendStylesheet('reset.css')
         ->appendStylesheet('default.css')
 
     $this->headScript()
@@ -19,6 +20,7 @@ print $this->doctype();
     </head>
     <body>
         <div id="PAGE">
+            <h1>Main Site Page</h1>
             <div class="main-content">
                 <?php print $this->layout()->content; ?> 
             </div>

@@ -49,6 +49,8 @@ class ErrorController extends Kizano_Controller_Action
                 $this->view->message = 'Application error';
                 break;
         }
+
+#var_dump($errors->exception->getMessage());
         
         $this->view->exception = $errors->exception;
         $this->view->request   = $errors->request;
