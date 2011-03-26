@@ -94,7 +94,7 @@ class Kizano_Paginator_Adapter_Doctrine implements Zend_Paginator_Adapter_Interf
 	/**
 	 *	Gets the current query on the queue.
 	 *	
-	 *	@return Osash_Query
+	 *	@return Kizano_Query
 	 */
 	public function getQuery()
 	{
@@ -104,9 +104,9 @@ class Kizano_Paginator_Adapter_Doctrine implements Zend_Paginator_Adapter_Interf
 	/**
 	 *	Allows you to set the current query object.
 	 *	
-	 *	@param $query	Osash_Query		The query to set.
+	 *	@param $query	Kizano_Query		The query to set.
 	 *	
-	 *	@return Osash_Paginator_Adapter_Doctrine
+	 *	@return Kizano_Paginator_Adapter_Doctrine
 	 */
 	public function setQuery(Doctrine_Query $query)
 	{

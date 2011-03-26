@@ -1,6 +1,6 @@
 <?php
 /**
- *  IndexController
+ *  Kizano_Application_Resource_Acl
  *
  *  LICENSE
  *
@@ -12,7 +12,7 @@
  *  obtain it through the world-wide-web, please send an email
  *  to license@zend.com so we can send you a copy immediately.
  *
- *  @category   ZF
+ *  @category   Kizano
  *  @package    Application
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -20,24 +20,36 @@
  */
 
 /**
- *  Home page action controller.
+ *  ACL manipulation resource object. Creates an instance of the ACL and stores
+ *  it in the registry.
  *
- *  @category   ZF
+ *  @category   Kizano
  *  @package    Application
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class IndexController extends Kizano_Controller_Action
+class Kizano_Application_Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 {
-	public function init()
-	{
-	
-	}
-	
-	public function indexAction()
-	{
-	    print __METHOD__;
-	}
+    /**
+     *    Starts up the initializes the ACL
+     *    
+     *    @return Kizano_Acl
+     */
+    public function init()
+    {
+        $this->_bootstrap->bootstrap('moduleConfig');
+
+        $acl = new Kizano_Acl($this->getOptions());
+        $acl->setupRoles();
+        $acl->setupDefaults();
+
+        $aclHelper = new Kizano_Controller_Helper_Acl($acl);
+
+        Zend_Controller_Action_HelperBroker::addHelper($aclHelper);
+        Zend_Registry::getInstance()->set('acl', $acl);
+
+        return $acl;
+    }
 }
 

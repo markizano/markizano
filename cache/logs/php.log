@@ -1,0 +1,25 @@
+[25-Mar-2011 22:39:49] PHP Fatal error:  Call to a member function getDefaultModule() on a non-object in /home/XAMPP/share/library/Zend/Application/Bootstrap/Bootstrap.php on line 89
+[25-Mar-2011 22:39:49] PHP Stack trace:
+[25-Mar-2011 22:39:49] PHP   1. {main}() /home/apache/git/markizano/markizano.git/htdocs/index.php:0
+[25-Mar-2011 22:39:49] PHP   2. Zend_Application->run() /home/apache/git/markizano/markizano.git/htdocs/index.php:4
+[25-Mar-2011 22:39:49] PHP   3. Zend_Application_Bootstrap_Bootstrap->run() /home/XAMPP/share/library/Zend/Application.php:366
+[25-Mar-2011 22:39:51] PHP Fatal error:  Call to a member function getDefaultModule() on a non-object in /home/XAMPP/share/library/Zend/Application/Bootstrap/Bootstrap.php on line 89
+[25-Mar-2011 22:39:51] PHP Stack trace:
+[25-Mar-2011 22:39:51] PHP   1. {main}() /home/apache/git/markizano/markizano.git/htdocs/index.php:0
+[25-Mar-2011 22:39:51] PHP   2. Zend_Application->run() /home/apache/git/markizano/markizano.git/htdocs/index.php:4
+[25-Mar-2011 22:39:51] PHP   3. Zend_Application_Bootstrap_Bootstrap->run() /home/XAMPP/share/library/Zend/Application.php:366
+[25-Mar-2011 22:39:51] PHP Fatal error:  Call to a member function getDefaultModule() on a non-object in /home/XAMPP/share/library/Zend/Application/Bootstrap/Bootstrap.php on line 89
+[25-Mar-2011 22:39:51] PHP Stack trace:
+[25-Mar-2011 22:39:51] PHP   1. {main}() /home/apache/git/markizano/markizano.git/htdocs/index.php:0
+[25-Mar-2011 22:39:51] PHP   2. Zend_Application->run() /home/apache/git/markizano/markizano.git/htdocs/index.php:4
+[25-Mar-2011 22:39:51] PHP   3. Zend_Application_Bootstrap_Bootstrap->run() /home/XAMPP/share/library/Zend/Application.php:366
+[25-Mar-2011 22:39:51] PHP Fatal error:  Call to a member function getDefaultModule() on a non-object in /home/XAMPP/share/library/Zend/Application/Bootstrap/Bootstrap.php on line 89
+[25-Mar-2011 22:39:51] PHP Stack trace:
+[25-Mar-2011 22:39:51] PHP   1. {main}() /home/apache/git/markizano/markizano.git/htdocs/index.php:0
+[25-Mar-2011 22:39:51] PHP   2. Zend_Application->run() /home/apache/git/markizano/markizano.git/htdocs/index.php:4
+[25-Mar-2011 22:39:51] PHP   3. Zend_Application_Bootstrap_Bootstrap->run() /home/XAMPP/share/library/Zend/Application.php:366
+[25-Mar-2011 22:39:51] PHP Fatal error:  Call to a member function getDefaultModule() on a non-object in /home/XAMPP/share/library/Zend/Application/Bootstrap/Bootstrap.php on line 89
+[25-Mar-2011 22:39:51] PHP Stack trace:
+[25-Mar-2011 22:39:51] PHP   1. {main}() /home/apache/git/markizano/markizano.git/htdocs/index.php:0
+[25-Mar-2011 22:39:51] PHP   2. Zend_Application->run() /home/apache/git/markizano/markizano.git/htdocs/index.php:4
+[25-Mar-2011 22:39:51] PHP   3. Zend_Application_Bootstrap_Bootstrap->run() /home/XAMPP/share/library/Zend/Application.php:366
