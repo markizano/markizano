@@ -1,1 +1,8 @@
-This is a test project to see just what we are dealing with.
+This is a project I started to maintain everything I know how to do in the ZF. I
+plan on putting everything I know into this and creating a decent skeleton
+framework I can keep around so that I can maintain work that I can simply copy
+and paste directly into other ZF-based projects. No application-specific work
+will end up in this project unless it's generic enough to be presented as such.
+
+-Kizano
+
