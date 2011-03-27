@@ -23,9 +23,8 @@
  * @category  Kizano
  * @package   Kizano
  * @author    Markizano Draconus <markizano@markizano.net>
- * @copyright 2010 Markizano Draconus
+ * @copyright 2010 Markizano Draconus <markizano@markizano.net>
  * @license   http://www.gnu.org/licenses/gpl.html GNU Public License
- * @link      https://github.com/markizano/markizano/blob/master/includes/library/Kizano/Array.php
  */
 
 /**
@@ -168,6 +167,7 @@ class Kizano_Array
             if (!is_array($arrays) || empty($arrays)) {
                 continue;
             }
+
             # Process each argument as if it were an array
             foreach ($arrays as $a => $array) {
                 if (is_array($array)) {
@@ -181,6 +181,7 @@ class Kizano_Array
                 }
             }
         }
+
         return $result;
     }
 

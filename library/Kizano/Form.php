@@ -9,7 +9,8 @@
  *	@CopyRight: (c) 2010 markizano Draconus <markizano@markizano.net>
  */
 
-class Kizano_Form extends Zend_Form{
+class Kizano_Form extends Zend_Form
+{
 
 	# Holds the name of the current form
 	protected $_formName;

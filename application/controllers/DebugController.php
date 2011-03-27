@@ -59,7 +59,6 @@ class DebugController extends Kizano_Controller_Action
     {
         $this->_disableLayout();
         print "debugging...";
-        var_dump(Zend_Controller_Front::getInstance()->getplugins()); die(__METHOD__);
     }
 
     /**

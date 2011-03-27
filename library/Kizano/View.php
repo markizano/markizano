@@ -14,8 +14,8 @@
  *	Abstract Class to drive the way a page is rendered.
  *	@Documentation TBA
  */
-class Kizano_View extends Zend_View_Abstract{
-
+class Kizano_View extends Zend_View_Abstract
+{
 	public $config;
 	protected $_blocks;
 	protected $_derived;
@@ -101,8 +101,9 @@ class Kizano_View extends Zend_View_Abstract{
 		elseif(is_array($name)){
 			foreach($name as $key => $val)
 				$this->_data[$key] = $val;
-		}else
-			throw new Kizano_Exception(sprintf('%s::%s(): First argument must be string or array. %s was passed.', __CLASS__, __FUNCTION__, getType($name)));
+		} else {
+			throw new InvalidArgumentException(sprintf('%s::%s(): First argument must be string or array. %s was passed.', __CLASS__, __FUNCTION__, getType($name)));
+		}
 		return false;
 	}
 
