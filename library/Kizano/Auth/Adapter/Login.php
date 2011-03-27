@@ -32,29 +32,31 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
 {
 
     /**
-     *    The HTTP Request object
+     * The HTTP Request object
+     *  
      * @var Zend_Controller_Request_Http
      */
     protected $_request;
 
     /**
-     *    The HTTP Response object
+     * The HTTP Response object
+     *  
      * @var Zend_Controller_Response_Http
      */
     protected $_response;
 
     /**
-     *    Holds the current user account instance
-     *    @var Model_User
-     */
-    protected $_user;
-
-    /**
-     *    Holds login information to be grabbed later in the application
-     *    @var Array
+     * Holds login information to be grabbed later in the application
+     *  
+     * @var Array
      */
     protected $_login;
 
+    /**
+     *  Bootstraps this class.
+     *  
+     *  @return void
+     */
     public function __construct()
     {
         if (!extension_loaded('hash')) {
@@ -65,13 +67,14 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
         $front = Zend_Controller_Front::getInstance();
         $this->_request = $front->getRequest();
         $this->_response = $front->getResponse();
-        $this->_user = Kizano::get('User');
+        $this->_user = Model_DbTable_User::getInstance();
         $this->_login = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
     }
 
     /**
-     *    Attempts to authenticate the user.
-     *    @return boolean
+     * Attempts to authenticate the user.
+     *  
+     * @return boolean
      */
     public function authenticate()
     {
@@ -84,29 +87,31 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
             $result = new Zend_Auth_Result(
                 Zend_Auth_Result::FAILURE,
                 null,
-                array(LANG_FORMS_LOGIN_ERROR_MISSING)
+                array('Empty login credentials!')
             );
         }
 
         # If the sought user isn't found in the DB.
-        $user = Doctrine::getTable('Model_UserUsers')->findOneBy('username', $params['username']);
-        if ($user === false) {
+        $user = $this->_user
+            ->fetchRow(array('username = ?' => $params['username']));
+        if (!$user) {
             $result = new Zend_Auth_Result(
                 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND,
                 $params['username'],
-                array(LANG_FORMS_LOGIN_ERROR_INVALID)
+                array('Invalid login credentials.')
             );
+        } else {
+            $user = $user->toArray();
         }
-
         # Mock up the hashed password and compare results.
         $hash = Kizano_Strings::hashPass($params['password'], $user['salt']);
         if ($hash === $user['password']) {
             $this->_login['user_id']        = $user['user_id'];
-            $this->_login['group_id']        = $this->getGroupID();
-            $this->_login['type']            = $this->getUserType();
+            #$this->_login['group_id']        = $this->getGroupID();
+            #$this->_login['type']            = $this->getUserType();
             $this->_login['email']            = $user['email'];
             $this->_login['username']        = $user['username'];
-            $this->_login['name']            = $this->getNames();
+            #$this->_login['name']            = $this->getNames();
             $result = new Zend_Auth_Result(
                 Zend_Auth_Result::SUCCESS,
                 $this->_login,
@@ -119,7 +124,7 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
             $result = new Zend_Auth_Result(
                 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND,
                 $params['username'],
-                array(LANG_FORMS_LOGIN_ERROR_INVALID)
+                array('Invalid login credentials.')
             );
         }
 
@@ -127,8 +132,9 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *    Retrieves the username from the attempted login.
-     *    @return string
+     * Retrieves the username from the attempted login.
+     *  
+     * @return string
      */
     public function getUsername()
     {
@@ -136,8 +142,9 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *    Retrieves the username from the attempted login.
-     *    @return string
+     * Retrieves the username from the attempted login.
+     *  
+     * @return string
      */
     public function getEmail()
     {
@@ -145,8 +152,9 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *    Retrieves the `user_id` from the DB based on this authenticated user.
-     *    @return integer
+     * Retrieves the `user_id` from the DB based on this authenticated user.
+     *  
+     * @return integer
      */
     public function getUserId()
     {
@@ -154,8 +162,9 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *    Gets the user's active status
-     *    @return boolean
+     * Gets the user's active status
+     *  
+     * @return boolean
      */
     public function getActive()
     {
@@ -163,8 +172,9 @@ class Kizano_Auth_Adapter_Login implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *    Gets the user's paid status
-     *    @return boolean
+     * Gets the user's paid status
+     *  
+     * @return boolean
      */
     public function getPaid()
     {

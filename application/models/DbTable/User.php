@@ -42,7 +42,7 @@ class Model_DbTable_User extends Kizano_Db_Table_Abstract
      *  
      *  @var string
      */
-    protected $_name = 'user';
+    protected $_name = 'users';
 
     /**
      *  Tells Zend_Db_Table which primary key belongs to said table.

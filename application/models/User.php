@@ -33,7 +33,23 @@ class Model_User extends Kizano_Db_Model
     /**
      *  Lists out the valid user roles for the ACL.
      */
+    const TYPE_GUEST = "G";
     const TYPE_ADMIN = "A";
+
+    /**
+     *  Quick Method to obtain an authorized user.
+     *  
+     *  @return Array
+     */
+    public static function getAuthUser()
+    {
+        return array(
+            'user_id' => 1,
+            'username' => 'test-user',
+            'email' => 'test@example.com',
+            'type' => self::TYPE_GUEST,
+        );
+    }
 
     /**
      *  Bootstraps this user model.

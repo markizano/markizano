@@ -57,7 +57,7 @@ class Kizano_Controller_Plugin_Navigation extends Zend_Controller_Plugin_Abstrac
 	        return false;
         }
 
-		$view = Zend_Registry::getInstance()->get('view');
+		$view = Zend_Registry::get('view');
 		$nav = new Zend_Config_Xml(DIR_APPLICATION . 'configs' . DS . 'navigation.xml', 'nav');
 		$navigation = new Zend_Navigation($nav);
 		$view->navigation()->menu()->setContainer($navigation);

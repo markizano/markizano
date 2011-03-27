@@ -75,7 +75,7 @@ class Kizano_Doctrine_Query extends Doctrine_Query
      */
     public function clearCache($params = array())
     {
-        $cache = Zend_Registry::getInstance()->cachemanager->getCache('generic');
+        $cache = Zend_Registry::get('cachemanager')->getCache('generic');
         $hash = $this->calculateQueryCacheHash($params);
         if ($cache->test($hash)) {
             $cache->remove($hash);

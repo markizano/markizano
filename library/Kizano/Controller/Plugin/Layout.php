@@ -133,7 +133,7 @@ class Kizano_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 			$this->_postDispatch = true;
 		}
 
-		$layout = Zend_Registry::getInstance()->get('layout');
+		$layout = Zend_Registry::get('layout');
 		$helper = $this->getLayoutActionHelper();
 
 		// Return early if forward detected

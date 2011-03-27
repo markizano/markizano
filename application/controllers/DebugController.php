@@ -39,9 +39,10 @@ class DebugController extends Kizano_Controller_Action
         # If I forget to disable this controller...
         $env = array('testing', 'dev');
         if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR'] || !in_array(ENVIRONMENT, $env)) {
-            $this->_helper->redirector->gotoUrl('/');
+            return $this->_helper->redirector->gotoUrl('/');
         }
 
+        parent::init();
         $this->view->debug = 'Please input something.';
 
         if ($this->_request->getActionName() != 'ajax') {
@@ -59,8 +60,6 @@ class DebugController extends Kizano_Controller_Action
     {
         $this->_disableLayout();
         print "debugging...";
-        $front = Zend_Controller_Front::getInstance();
-        #var_dump($front->getModuleDirectory('admin'), $front->getControllerDirectory());
     }
 
     /**
@@ -103,8 +102,7 @@ JQUERY
      */
     public function sessionAction()
     {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_disableLayout();
 
         if (!$this->_request->getQuery() || count($this->_request->getQuery()) <= 1) {
 	        echo

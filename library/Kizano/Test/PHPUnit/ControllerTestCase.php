@@ -97,17 +97,17 @@ class Kizano_Test_PHPUnit_ControllerTestCase extends Zend_Test_PHPUnit_Controlle
     }
 
     /**
-     * Returns the application configuration
-     *
-     * @return Zend_Config_Ini
+     *  Authenticates the user according to the application sepcifics.
+     *  
+     *  @return void
      */
-    public function getConfiguration()
+    public function authenticate()
     {
-        if ($this->__configuration == null) {
-            $this->__configuration = new Zend_Config($this->_options);
-        }
-
-        return $this->__configuration;
+        $session = Zend_Registry::get('session');
+        $session->authentication = new ArrayObject(
+            Model_User::getAuthUser(),
+            ArrayObject::ARRAY_AS_PROPS
+        );
     }
 
     /**

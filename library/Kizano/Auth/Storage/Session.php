@@ -66,15 +66,15 @@ class Kizano_Auth_Storage_Session implements Zend_Auth_Storage_Interface
      *
      * @param  mixed $namespace
      * @param  mixed $member
+     *
      * @return void
      */
     public function __construct($namespace = self::NAMESPACE_DEFAULT, $member = self::MEMBER_DEFAULT)
     {
-        $reg = Zend_Registry::getInstance();
         $this->_namespace = $namespace;
         $this->_member    = $member;
-        $this->_session   = $reg->isRegistered('session') ?
-            $reg->get('session'): new Zend_Session_Namespace($this->_namespace);
+        $this->_session   = Zend_Registry::isRegistered('session') ?
+            Zend_Registry::get('session'): new Zend_Session_Namespace($this->_namespace);
     }
 
     /**

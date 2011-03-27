@@ -75,7 +75,7 @@ class Kizano_Form extends Zend_Form
             $this->setConfig($options);
         }
 
-		$this->view = Zend_Registry::getInstance()->get('view');
+		$this->view = Zend_Registry::get('view');
 		$this->setName('Default_Form');
 		$this->setAction('');
 		$this->setDisableLoadDefaultDecorators(true);

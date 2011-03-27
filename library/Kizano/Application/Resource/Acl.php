@@ -47,7 +47,7 @@ class Kizano_Application_Resource_Acl extends Zend_Application_Resource_Resource
         $aclHelper = new Kizano_Controller_Helper_Acl($acl);
 
         Zend_Controller_Action_HelperBroker::addHelper($aclHelper);
-        Zend_Registry::getInstance()->set('acl', $acl);
+        Zend_Registry::set('acl', $acl);
 
         return $acl;
     }

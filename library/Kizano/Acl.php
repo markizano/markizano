@@ -31,14 +31,16 @@
 class Kizano_Acl extends Zend_Acl
 {
     /**
-     *    Configuration options.
-     *    @var array
+     * Configuration options.
+     * 
+     * @var array
      */
     protected $_options;
 
     /**
-     *    Debugging option
-     *    @var boolean
+     * Debugging option
+     * 
+     * @var boolean
      */
     protected $_debug;
 
@@ -48,9 +50,11 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Sets configuration options
-     *    @param options        Zend_Config|array    The options to set.
-     *    @return void
+     * Sets configuration options
+     * 
+     * @param Zend_Config|array     $options    The options to set.
+     * 
+     * @return void
      */
     public function setOptions($options)
     {
@@ -59,7 +63,7 @@ class Kizano_Acl extends Zend_Acl
         }
 
         if (!is_array($options)) {
-            throw new Kizano_Acl_Exception(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 '%s(): Expected array for the options, received %s',
                 __METHOD__,
                 gettype($options)
@@ -72,8 +76,9 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Gets configuration options.
-     *    @return array
+     * Gets configuration options.
+     * 
+     * @return array
      */
     public function getOptions()
     {
@@ -81,8 +86,9 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Define the roles and resources, then setup the permissions for them.
-     *    @return void
+     * Define the roles and resources, then setup the permissions for them.
+     * 
+     * @return void
      */
     public function setupRoles()
     {
@@ -136,14 +142,14 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Sets up the allow/deny rules for a given role.
-     *    
-     *    @param $role        string    The role ID to use.
-     *    @param $resource    string    The resource ID to use.
-     *    @param $privilege    string    The privilege ID to use.
-     *    @param $grant        enum    (allow|deny)
-     *    
-     *    @return void
+     * Sets up the allow/deny rules for a given role.
+     * 
+     * @param string    $role       The role ID to use.
+     * @param string    $resource   The resource ID to use.
+     * @param string    $privilege  The privilege ID to use.
+     * @param enum      $grant      (allow|deny)
+     * 
+     * @return void
      */
     public function allowDeny($role, $resource, $privilege, $grant = 'deny')
     {
@@ -152,8 +158,9 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Setup the default allow/deny access rights.
-     *    @return void
+     * Setup the default allow/deny access rights.
+     * 
+     * @return void
      */
     public function setupDefaults()
     {
@@ -166,12 +173,12 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Gets a usable resource name based on the type provided.
-     *    
-     *    @param $module        string    The module name.
-     *    @param $controller    string    The controller name.
-     *    
-     *    @return string
+     * Gets a usable resource name based on the type provided.
+     * 
+     * @param stirng    $module     The module name.
+     * @param string    $controller The controller name.
+     * 
+     * @return string
      */
     protected function _getResource($module, $controller, $action = null) {
         if ($action) {
@@ -182,11 +189,13 @@ class Kizano_Acl extends Zend_Acl
     }
 
     /**
-     *    Checks to see if a given role has access to a resource
-     *    @param role            string    The user role
-     *    @param resource        string    The resource the user wants to access.
-     *    @param privilege    string    The privilege the user has.
-     *    @return boolean
+     * Checks to see if a given role has access to a resource
+     * 
+     * @param string    $role        The user role
+     * @param string    $resource    The resource the user wants to access.
+     * @param string    $privilege   The privilege the user has.
+     * 
+     * @return boolean
      */
     public function isAllowed($role = null, $resource = null, $privilege = null) {
         $role = $this->hasRole($role) ? $role : $this->_options['default']['role'];
@@ -194,6 +203,13 @@ class Kizano_Acl extends Zend_Acl
         return (bool)parent::isAllowed($role, $resource, $privilege);
     }
 
+    /**
+     *  Gets a role based on the registered roles with the model.
+     *  
+     *  @param string   $role   The role to check.
+     *  
+     *  @return string
+     */
     protected function _getRole($role)
     {
         // We can't depend entirely on the application, but if it's there, use it.

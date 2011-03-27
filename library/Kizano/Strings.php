@@ -603,7 +603,7 @@ class Kizano_Strings
      */
     public static function getFlash()
     {
-        $session = Zend_Registry::getInstance()->get('session');
+        $session = Zend_Registry::get('session');
         $result = is_array($session->flash)? nl2br(join(chr(10), (array)$session->flash)): null;
         unset($session->flash);
         return $result;
@@ -618,7 +618,7 @@ class Kizano_Strings
      */
     public static function flash($msg)
     {
-        $session = Zend_Registry::getInstance()->get('session');
+        $session = Zend_Registry::get('session');
         $session->flash[] = $msg;
         return;
     }
