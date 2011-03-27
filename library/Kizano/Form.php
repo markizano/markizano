@@ -1,32 +1,69 @@
 <?php
 /**
- *	@Name: ~/library/Kizano/Form.php
- *	@Depends: ~/library/Zend/Form.php
- *	@Description: Main Form class
- *	@Notes: Edit with Care
+ *  Kizano_Form
  *
- *	Kizano: ZF-Friendly library extensions.
- *	@CopyRight: (c) 2010 markizano Draconus <markizano@markizano.net>
+ *  LICENSE
+ *
+ *  This source file is subject to the new BSD license that is bundled
+ *  with this package in the file LICENSE.txt.
+ *  It is also available through the world-wide-web at this URL:
+ *  http://framework.zend.com/license/new-bsd
+ *  If you did not receive a copy of the license and are unable to
+ *  obtain it through the world-wide-web, please send an email
+ *  to license@zend.com so we can send you a copy immediately.
+ *
+ *  @category   Kizano
+ *  @package    Form
+ *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
+ *  @license    http://framework.zend.com/license/new-bsd     New BSD License
+ *  @author     Markizano Draconus <markizano@markizano.net>
  */
 
+/**
+ *  Form extension for improving Zend_Form's functionality.
+ *
+ *  @category   Kizano
+ *  @package    Form
+ *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
+ *  @license    http://framework.zend.com/license/new-bsd     New BSD License
+ *  @author     Markizano Draconus <markizano@markizano.net>
+ */
 class Kizano_Form extends Zend_Form
 {
 
-	# Holds the name of the current form
+	/**
+	 *  Holds the name of the current form
+	 *  
+	 *  @var string
+	 */
 	protected $_formName;
 
-	# Holds the fields to render in the form
+	/**
+	 *  Holds the fields to render in the form
+	 *  
+	 *  @var Array
+	 */
 	protected $_fields = array();
 
-	# Default configuration to inject into the form
+	/**
+	 *  Default configuration to inject into the form
+	 *  
+	 *  @var Array
+	 */
 	protected $_defaults = array();
 
-	# @Zend_View instance to help with the rendering
+	/**
+	 *  View instance to help with the rendering
+	 *  
+	 *  @var Zend_View 
+	 */
 	public $view;
 
 	/**
 	 *	Generates a new instance of this formset
+	 *  
 	 *	@param	Zend_Config		options		(Optional) Zend_Form Configuration options
+	 *  
 	 *	@return void
 	 */
 	public function __construct($options = null)
@@ -50,13 +87,15 @@ class Kizano_Form extends Zend_Form
 
 	/**
 	 *	Gets a particular form of this extension.
+	 *  
 	 *	@param	name		string		The name of the form extension to obtain.
+	 *  
 	 *	@return	Kizano_Form
 	 *	@throws	Kizano_Form_Exception
 	 */
 	public static function getForm($name) {
 		if (!is_string($name)) {
-			throw new Kizano_Form_Exception(sprintf(
+			throw new InvalidArgumentException(sprintf(
 				"%s::%s(): @param \$name: Expected(string); Received(%s).",
 				__CLASS__,
 				__FUNCTION__,
@@ -64,21 +103,27 @@ class Kizano_Form extends Zend_Form
 			));
 			return false;
 		}
+
 		$formName = 'Kizano_Form_'.ucWords($name);
+
 		if (!class_exists($formName, false)) {
 			Zend_Loader::loadClass($formName);
 		}
+
 		$form = new $formName;
 		$form->$name();
 		if (!$form) return false;
+
 		return $form;
 	}
 
 	/**
 	 *	Adds a form element to this form.
+	 *  
 	 *	@param name		string				The name of the field to add.
 	 *	@param type		string				The fully qualified classname of the field to add.
 	 *	@param options	array|Zend_Config	Configuration options to add to the element.
+	 *  
 	 *	@return Kizano_Form
 	 */
 	public function addField($name, $type, $options = array()) {
@@ -117,71 +162,13 @@ class Kizano_Form extends Zend_Form
 	}
 
 	/**
-	 *	Gets a specified field from this form.
-	 *	@param	name		The field name to obtain.
-	 *	@return mixed		False if the field does not exist, Zend_Form_Element otherwise.
-	 */
-	public function getField($name) {
-		if (!isset($this->_fields[$name])) {
-			return false;
-		}
-		return $this->_fields[$name];
-	}
-
-	/**
-	 *	Adds fields to the form.
-	 *	@param fields		Array	The fields to add.
-	 *	@return Kizano_Form
-	 */
-	public function addFields(array $fields) {
-		$this->_fields = $fields;
-		return $this;
-	}
-
-	/**
-	 *	Gets all the fields in this form.
-	 *	@return array
-	 */
-	public function getFields() {
-		return $this->_fields;
-	}
-
-	/**
-	 *	Clears the fields from this form.
-	 *	@return Kizano_Form
-	 */
-	public function clearFields() {
-		$this->_fields = array();
-		return $this;
-	}
-
-	/**
-	 *	Validates this form to ensure the user submitted the proper data.
-	 *	@param params		Array	The information the user submitted to validate.
-	 *	@return boolean
-	 */
-	public function isValid($params = array()) {
-		$result = parent::isValid($params);
-		foreach ($this->getFields() as $name => $field) {
-			if (!isset($params[$name])) continue;
-			if (!$field->isValid($params[$name])) {
-				foreach ($field->getValidators() as $validator) {
-					if (!$validator->isValid($params[$name])) {
-						$field->setErrorMessages($validator->getMessages());
-					}
-				}
-				$result = false;
-			}
-		}
-		return (boolean)$result;
-	}
-
-	/**
 	 *	Adds validators, filters, appends a submit button, generates and renders 
 	 *		this instance of a form.
+	 *  
 	 *	@return Kizano_Form
 	 */
-	public function finalizeForm() {
+	public function finalizeForm()
+	{
 		# Add internal validators
 		$this->_validate();
 		# Add internal filters
@@ -203,33 +190,8 @@ class Kizano_Form extends Zend_Form
 	}
 
 	/**
-	 *	Overrides the parent rendering function and renders the form for display.
-	 *	@return string
-	 */
-	public function render(Zend_View_Interface $view = null) {
-		$result = null;
-		$attribs = array();
-		foreach ($this->_attribs as $key => $attrib) {
-			$attrib = htmlEntities($attrib, ENT_QUOTES, 'utf-8');
-			$attribs[] .= "$key='$attrib'";
-		}
-		$attribs = join(chr(32), $attribs);
-
-		$result .= "\n\t\t\t\t\t<form method='{$this->getMethod()}'$attribs>\n";
-		if ($this->getErrorMessages()) {
-			$result .= "\t\t\t<ul class='error'>\n\t\t\t\t<li>";
-			$result .= join("</li>\n\t\t\t\t<li>", $this->getErrorMessages());
-			$result .= "</li>\n\t\t\t</ul>\n";
-		}
-		foreach ($this->_elements as $element) {
-			$result .= $element->render($view);
-		}
-		$result .= "\n\t\t\t\t\t</form>\n\t\t\t\t";
-		return $result;
-	}
-
-	/**
 	 *	Placeholder for adding filters.
+	 *  
 	 *	@return void
 	 */
 	protected function _filter()
@@ -237,9 +199,11 @@ class Kizano_Form extends Zend_Form
 
 	/**
 	 *	Placeholder for adding validators.
+	 *  
 	 *	@return void
 	 */
-	protected function _validate() {
+	protected function _validate()
+	{
 		foreach ($this->_fields as $name => $field) {
 			if ($field->isRequired()) {
 				$this->_fields[$name]->addValidator(new Zend_Validate_NotEmpty);
@@ -249,9 +213,11 @@ class Kizano_Form extends Zend_Form
 
 	/**
 	 *	Magic function to return the string representation of this form.
+	 *  
 	 *	@return string
 	 */
-	public function __toString() {
+	public function __toString()
+	{
 		return $this->render($this->view);
 	}
 }

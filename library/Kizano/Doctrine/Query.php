@@ -159,7 +159,7 @@ class Kizano_Doctrine_Query extends Doctrine_Query
 	{
 		$dql = $this->getDql();
 		// ripemd256 is ever so slightly faster than sha256
-		$hash = hash('ripemd256', $dql . var_export($this->_pendingJoinConditions, true) . 'OSASH_QUERY_CACHE_SALT');
+		$hash = hash('ripemd256', $dql . var_export($this->_pendingJoinConditions, true) . 'KIZANO_QUERY_CACHE_SALT');
 		return $hash;
 	}
 
