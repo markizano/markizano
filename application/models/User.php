@@ -28,19 +28,12 @@
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Model_User
+class Model_User extends Kizano_Db_Model
 {
     /**
      *  Lists out the valid user roles for the ACL.
      */
     const TYPE_ADMIN = "A";
-
-    /**
-     *  Holds an instance of the DB table this user modifies.
-     *  
-     *  @var Model_DbTable_User
-     */
-    protected $_table;
 
     /**
      *  Bootstraps this user model.

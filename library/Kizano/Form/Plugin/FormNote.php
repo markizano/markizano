@@ -1,6 +1,6 @@
 <?php
 /**
- *  Kizano_Form_Element_Static
+ *  Kizano_Form_Plugins_FormNote
  *
  *  LICENSE
  *
@@ -20,7 +20,7 @@
  */
 
 /**
- *  New element for static text.
+ *  Form plugin to represent plain text.
  *
  *  @category   Kizano
  *  @package    Form
@@ -28,19 +28,13 @@
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Kizano_Form_Element_Static extends Zend_Form_Element
-{
-	public $helper = 'FormNote';
+class Kizano_Form_Plugin_FormNote extends Zend_View_Helper_FormElement{
 
-    /**
-     *  ZF-Hook for a construct.
-     *  
-     *  @return void
-     */
+	/**
+	 *	Initializes this plugin... does nothing...
+	 *	@return void
+	 */
 	public function init()
-	{
-		$this->clearDecorators();
-	}
+	{}
 }
-
 

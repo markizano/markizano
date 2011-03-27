@@ -1,6 +1,6 @@
 <?php
 /**
- *  Kizano_Form_Element_Static
+ *  Kizano_Db_Model
  *
  *  LICENSE
  *
@@ -13,34 +13,52 @@
  *  to license@zend.com so we can send you a copy immediately.
  *
  *  @category   Kizano
- *  @package    Form
+ *  @package    Db
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
 
 /**
- *  New element for static text.
+ *  Generic model abstract for handling models that map to tables.
  *
  *  @category   Kizano
- *  @package    Form
+ *  @package    Db
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Kizano_Form_Element_Static extends Zend_Form_Element
+abstract class Kizano_Db_Model
 {
-	public $helper = 'FormNote';
+    /**
+     *  Holds an instance of the table this model is influencing.
+     *  
+     *  @var Zend_Db_Table_Abstract
+     */
+    protected $_table;
 
     /**
-     *  ZF-Hook for a construct.
+     *  Gets the current table this model is influencing.
      *  
-     *  @return void
+     *  @return Zend_Db_Table_Abstract
      */
-	public function init()
-	{
-		$this->clearDecorators();
-	}
-}
+    public function getTable()
+    {
+        return $this->_table;
+    }
 
+    /**
+     *  Sets the table this model should influence.
+     *  
+     *  @return Kizano_Db_Model
+     */
+    public function setTable(Zend_Db_Table_Abstract $table)
+    {
+        if (!$table instanceof Zend_Db_Table_Abstract) {
+            throw new InvalidArgumentException('Argument 1 ($table) expected instance of Zend_Db_Table_Abstract');
+        }
+        $this->_table = $table;
+        return $this;
+    }
+}
 

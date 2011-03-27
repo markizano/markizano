@@ -196,14 +196,13 @@ class Kizano_Acl extends Zend_Acl
 
     protected function _getRole($role)
     {
+        // We can't depend entirely on the application, but if it's there, use it.
         if (!class_exists('Model_User')) {
             return $this->_options['default']['role'];
         }
 
         switch ($role) {
             case 'admin':       return Model_User::TYPE_ADMIN;
-            case 'provider':    return Model_User::TYPE_PROVIDER;
-            case 'consumer':    return Model_User::TYPE_CONSUMER;
             default:            return $this->_options['default']['role'];
         }
     }

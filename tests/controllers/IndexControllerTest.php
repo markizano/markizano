@@ -1,6 +1,6 @@
 <?php
 /**
- *  Kizano_Form_Element_Static
+ *  Kizano_IndexControllerTest
  *
  *  LICENSE
  *
@@ -13,34 +13,33 @@
  *  to license@zend.com so we can send you a copy immediately.
  *
  *  @category   Kizano
- *  @package    Form
+ *  @package    Controller
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
 
 /**
- *  New element for static text.
+ *  Serves as an example unit tests against a controller.
  *
  *  @category   Kizano
- *  @package    Form
+ *  @package    Controller
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Kizano_Form_Element_Static extends Zend_Form_Element
+class IndexControllerTest extends Kizano_Test_PHPUnit_ControllerTestCase
 {
-	public $helper = 'FormNote';
-
     /**
-     *  ZF-Hook for a construct.
+     *  Ensures the home page loads.
      *  
      *  @return void
      */
-	public function init()
-	{
-		$this->clearDecorators();
-	}
+    public function testIndexAction()
+    {
+        $this->dispatch('/');
+        $body = $this->response->getBody();
+        $this->assertContains('<html', $body, 'Failed to verify the home page loads.');
+    }
 }
-
 

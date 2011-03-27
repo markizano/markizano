@@ -1,6 +1,6 @@
 <?php
 /**
- *  Kizano_Form_Element_Static
+ *  PHPUnit Bootstrap
  *
  *  LICENSE
  *
@@ -13,34 +13,15 @@
  *  to license@zend.com so we can send you a copy immediately.
  *
  *  @category   Kizano
- *  @package    Form
+ *  @package    PHPUnit
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
 
-/**
- *  New element for static text.
- *
- *  @category   Kizano
- *  @package    Form
- *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
- *  @license    http://framework.zend.com/license/new-bsd     New BSD License
- *  @author     Markizano Draconus <markizano@markizano.net>
- */
-class Kizano_Form_Element_Static extends Zend_Form_Element
-{
-	public $helper = 'FormNote';
+$_SERVER['ENVIRONMENT'] = 'testing';
+$_SERVER['SERVER_NAME'] = 'testing.markizano.git';
+date_default_timezone_set('America/New_York');
 
-    /**
-     *  ZF-Hook for a construct.
-     *  
-     *  @return void
-     */
-	public function init()
-	{
-		$this->clearDecorators();
-	}
-}
-
+require dirname(__FILE__) . '/../application/setup.php';
 
