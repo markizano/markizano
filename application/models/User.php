@@ -31,6 +31,11 @@
 class Model_User
 {
     /**
+     *  Lists out the valid user roles for the ACL.
+     */
+    const TYPE_ADMIN = "A";
+
+    /**
      *  Holds an instance of the DB table this user modifies.
      *  
      *  @var Model_DbTable_User

@@ -59,8 +59,8 @@ class DebugController extends Kizano_Controller_Action
     {
         $this->_disableLayout();
         print "debugging...";
-        $db = Zend_Registry::get('db');
-        var_dump($db->query('show tables')->fetchAll());
+        $front = Zend_Controller_Front::getInstance();
+        #var_dump($front->getModuleDirectory('admin'), $front->getControllerDirectory());
     }
 
     /**
