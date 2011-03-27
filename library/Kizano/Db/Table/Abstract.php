@@ -1,6 +1,6 @@
 <?php
 /**
- *  Kizano_Model_DbTable_User
+ *  Kizano_Db_Table_Abstract
  *
  *  LICENSE
  *
@@ -13,64 +13,23 @@
  *  to license@zend.com so we can send you a copy immediately.
  *
  *  @category   Kizano
- *  @package    DbTable
+ *  @package    Db
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
 
 /**
- *  Database accessor to the user table.
+ *  Provies us with a central point of extending Zend_Db_Table methods.
  *
  *  @category   Kizano
- *  @package    DbTable
+ *  @package    Db
  *  @copyright  Copyright (c) 2009-2011 Markizano Draconus <markizano@markizano.net>
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Model_DbTable_User extends Kizano_Db_Table_Abstract
+class Kizano_Db_Table_Abstract extends Zend_Db_Table_Abstract
 {
-    /**
-     *  Singleton.
-     *  
-     *  @var Model_User
-     */
-    protected static $_instance;
 
-    /**
-     *  Tells Zend_Db_Table which table this is interfacing.
-     *  
-     *  @var string
-     */
-    protected $_name = 'user';
-
-    /**
-     *  Tells Zend_Db_Table which primary key belongs to said table.
-     *  
-     *  @var string
-     */
-    protected $_primary = array('user_id');
-
-    /**
-     *  Singleton.
-     *  
-     *  @return void
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$_instance)) {
-            self::$_instance = new self;
-        }
-
-        return self::$_instance;
-    }
-
-    /**
-     *  ZF-Hook for a construct.
-     *  
-     *  @return void
-     */
-    public function init()
-    {}
 }
 

@@ -59,6 +59,8 @@ class DebugController extends Kizano_Controller_Action
     {
         $this->_disableLayout();
         print "debugging...";
+        $db = Zend_Registry::get('db');
+        var_dump($db->query('show tables')->fetchAll());
     }
 
     /**
@@ -95,17 +97,39 @@ JQUERY
     }
 
     /**
-     *    Dumps the session data with a little bit of param control.
-     *    
-     *    @return void
+     * Dumps the session data with a little bit of param control.
+     *
+     * @return void
      */
     public function sessionAction()
     {
-        if ($this->_request->getParam('destroy') !== null) {
-            session_destroy();
-            print "Session destroyed.<br />\n";
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        if (!$this->_request->getQuery() || count($this->_request->getQuery()) <= 1) {
+	        echo
+		        '_SESSION: ', var_dump($this->_session->getIterator()->getArrayCopy()),
+		        '_COOKIE', var_dump($this->_request->getCookie()),
+		        '_POST: ', var_dump($this->_request->getPost()),
+		        '_GET: ', var_dump($this->_request->getQuery()),
+		        '_PARAMS: ', var_dump($this->_request->getParams()),
+		        '_SERVER: ', var_dump($this->_request->getServer()),
+		        '_ENV: ', var_dump($this->_request->getEnv())
+	        ;
         } else {
-            var_dump($_SESSION);
+	        if ($this->_request->getParam('_destroy')) {
+		        $this->_session = null;
+		        session_destroy();
+		        print "Destroyed.<br />\n";
+	        } elseif ($unset = $this->_request->getParam('_unset')) {
+		        unset($this->_session->$unset);
+		        printf("Unset %s<br />\n", $this->view->escape($unset));
+	        } else {
+		        foreach($this->_request->getQuery() as $name => $val)
+			        $this->_session->$name = $val;
+		        var_dump($this->_session->getIterator()->getArrayCopy());
+		        echo "\nset\n";
+	        }
         }
     }
 }
