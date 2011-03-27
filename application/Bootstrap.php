@@ -61,18 +61,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * Initializes the front controller.
-     * 
-     * @return Zend_Controller_Front
-     */
-    protected function _initFront()
-    {
-        $this->bootstrap('frontcontroller');
-        $this->frontController->unRegisterPlugin('Zend_Layout_Controller_Plugin_Layout');
-        return $this->frontController;
-    }
-
-    /**
      * Initializes the configuration
      * 
      * @return        Array        The configuration loaded.
@@ -85,18 +73,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * Initializes the modules and registers their namespaces to ensure easy loading.
+     * For some reason, ZF won't register the cachemanager in the registry.
+     * We do it manually here.
      * 
      * @return void
      */
-    protected function _initModule()
+    protected function _initCache()
     {
-        $modules = $this->_options['resources']['modules'];
-        foreach (array_keys($modules) as $module) {
-            $controllers[$module] = DIR_APPLICATION . 'modules' . DS . $module . DS . 'controllers';
-        }
-        $this->frontController->setControllerDirectory($controllers);
-        $this->frontController->addControllerDirectory(DIR_APPLICATION . 'controllers');
+        $this->bootstrap('cachemanager');
+        Zend_Registry::set('cachemanager', $this->getResource('cachemanager'));
     }
 
     /**
@@ -107,8 +92,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initLogger()
     {
         $this->bootstrap('log');
-        $log = $this->getResource('log');
-        Zend_Registry::set('log', $log);
+        Zend_Registry::set('log', $this->getResource('log'));
     }
 
     /**
@@ -150,28 +134,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * For some reason, ZF won't register the cachemanager in the registry.
-     * We do it manually here.
-     * 
-     * @return void
-     */
-    protected function _initCache()
-    {
-        $this->bootstrap('cachemanager');
-        $cache = $this->getResource('cachemanager');
-        Zend_Registry::set('cachemanager', $cache);
-    }
-
-    /**
      * Initializes the View controller
      * 
      * @return Zend_View
      */
     protected function _initViews()
     {
-        $this->bootstrap(array('layout', 'view'));
+        $this->bootstrap('view');
         $layout = $this->getResource('layout');
         $this->view = $this->getResource('view');
+
         $this->view->headMeta()->setIndent(4);
         $this->view->headLink()->setIndent(4);
         $this->view->headScript()->setIndent(4);
@@ -181,9 +153,39 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->setViewScriptPathSpec(':controller/:action.:suffix')
             ->setViewScriptPathNoControllerSpec(':action.:suffix');
         $layout->setView($this->view);
+
         Zend_Registry::set('layout', $layout);
         Zend_Registry::set('view', $this->view);
+
         return $this->view;
+    }
+
+    /**
+     * Initializes the front controller.
+     * 
+     * @return Zend_Controller_Front
+     */
+    protected function _initFront()
+    {
+        $this->bootstrap('frontcontroller');
+        $this->frontController->unRegisterPlugin('Zend_Layout_Controller_Plugin_Layout');
+        return $this->frontController;
+    }
+
+    /**
+     * Initializes the modules and registers their namespaces to ensure easy loading.
+     * 
+     * @return void
+     */
+    protected function _initModule()
+    {
+        $modules = $this->_options['resources']['modules'];
+        foreach (array_keys($modules) as $module) {
+            $controllers[$module] = DIR_APPLICATION . 'modules' . DS . $module . DS . 'controllers';
+        }
+
+        $this->frontController->setControllerDirectory($controllers);
+        $this->frontController->addControllerDirectory(DIR_APPLICATION . 'controllers');
     }
 
     /**

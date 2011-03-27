@@ -37,7 +37,7 @@ class DebugController extends Kizano_Controller_Action
     public function init()
     {
         # If I forget to disable this controller...
-        $env = array('testing', 'local');
+        $env = array('testing', 'dev');
         if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR'] || !in_array(ENVIRONMENT, $env)) {
             $this->_helper->redirector->gotoUrl('/');
         }
@@ -59,10 +59,7 @@ class DebugController extends Kizano_Controller_Action
     {
         $this->_disableLayout();
         print "debugging...";
-
-        return;
-        $table = Kizano::getTable('UserUsers');
-        var_dump($table);
+        var_dump(Zend_Controller_Front::getInstance()->getplugins()); die(__METHOD__);
     }
 
     /**

@@ -45,10 +45,6 @@ class Kizano_Application_Resource_View extends Zend_Application_Resource_Resourc
     public function init()
     {
         $view = $this->getView();
-
-        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
-        $viewRenderer->setView($view);
-        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
         return $view;
     }
 
@@ -60,8 +56,9 @@ class Kizano_Application_Resource_View extends Zend_Application_Resource_Resourc
     public function getView()
     {
         if (null === $this->_view) {
+            $this->_bootstrap->bootstrap('layout');
             $options = $this->getOptions();
-            $this->_view = $this->getBootstrap()->getResource('layout')->getView();
+            $this->_view = $this->_bootstrap->getResource('layout')->getView();
 
             if (isset($options['doctype'])) {
                 $this->_view->doctype()->setDoctype(strtoupper($options['doctype']));
@@ -70,9 +67,11 @@ class Kizano_Application_Resource_View extends Zend_Application_Resource_Resourc
                     $this->_view->headMeta()->setCharset($options['charset']);
                 }
             }
+
             if (isset($options['contentType'])) {
                 $this->_view->headMeta()->appendHttpEquiv('Content-Type', $options['contentType']);
             }
+
             if (isset($options['helperPaths'])
                 && (
                     is_array($options['helperPaths'])
@@ -84,6 +83,7 @@ class Kizano_Application_Resource_View extends Zend_Application_Resource_Resourc
                     $this->_view->addHelperPath($prefix, $path);
                 }
             }
+
             if (isset($options['scriptPaths'])
                 && (
                     is_array($options['scriptPaths'])
@@ -95,6 +95,7 @@ class Kizano_Application_Resource_View extends Zend_Application_Resource_Resourc
                 }
             }
         }
+
         return $this->_view;
     }
 }

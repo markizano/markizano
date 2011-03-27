@@ -28,6 +28,9 @@ define('DIR_APPLICATION', realpath(BASE_DIR . DS . 'application') . DS);
 
 define('WEB_HTTP', "http://$_SERVER[SERVER_NAME]");
 define('WEB_HTTPS', "https://$_SERVER[SERVER_NAME]");
+define('WEB_CSS', '/assets/css/');
+define('WEB_JS', '/assets/js/');
+define('WEB_IMAGES', '/assets/images/');
 
 if (isset($_SERVER['ENVIRONMENT'])) {
     define('ENVIRONMENT', $_SERVER['ENVIRONMENT']);

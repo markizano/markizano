@@ -171,7 +171,7 @@ class Kizano_Test_PHPUnit_DatabaseTestCase extends Zend_Test_PHPUnit_DatabaseTes
     protected function getDataSet()
     {
         if (empty($this->_initialSeedFile)) {
-            throw new Cpc_Test_Exception(sprintf(
+            throw new Kizano_Test_Exception(sprintf(
                 'You must define a value for %s::_initialSeedFile!',
                 get_class($this)
             ));

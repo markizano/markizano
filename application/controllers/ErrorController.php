@@ -30,30 +30,33 @@
  */
 class ErrorController extends Kizano_Controller_Action
 {
-
+    /**
+     *  Handles the error for the default ZF implementation.
+     *  
+     *  @return void
+     */
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
-        
-        switch ($errors->type) { 
+
+        switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-        
+
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $this->view->message = 'Page not found';
                 break;
             default:
-                // Generic application error 
+                // Generic application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $this->view->message = 'Application error';
                 break;
         }
 
-#var_dump($errors->exception->getMessage());
-        
         $this->view->exception = $errors->exception;
         $this->view->request   = $errors->request;
+        $this->_response->clearBody();
     }
 }
 

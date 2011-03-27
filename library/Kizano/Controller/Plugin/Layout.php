@@ -102,7 +102,9 @@ class Kizano_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 
 	/**
 	 *	Pre Dispatch hook - determine the user and which layout to use
-	 *	@param request		Zend_Controller_Request_Abstract	The Zend Request object (or an instance of)
+	 * 
+	 *	@param Zend_Controller_Request_Abstract $request An instance of the Zend Request object
+	 * 
 	 *	@return void
 	 */
 	public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -117,13 +119,14 @@ class Kizano_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 	}
 
 	/**
-	 * postDispatch() plugin hook -- render layout
+	 * ZF-Hook implemented to render the layout.
 	 *
 	 * @param  Zend_Controller_Request_Abstract $request
+	 *
 	 * @return void
 	 */
 	public function postDispatch(Zend_Controller_Request_Abstract $request) {
-		# If we've already post-dispatched, then we shouldn't execute this function
+		# If we've already post-dispatched, then we shouldn't execute this method
 		if ($this->_postDispatch) {
 			return null;
 		} else {

@@ -104,7 +104,12 @@ class Kizano_Acl extends Zend_Acl
             # Next, add the resources to the ACL list.
             foreach ($moduleConfig as $controller => $controllerConfig) {
                 foreach ($controllerConfig as $action => $privileges) {
-                    if ($action == 'all') trigger_error("Privilege action `all' is deprecated. Found in module($module)/controller($controller)/action($action)", E_USER_WARNING);
+                    if ($action == 'all') {
+                        trigger_error("Privilege action `all' is deprecated. " .
+                            "Found in module($module)/controller($controller)/action($action)",
+                            E_USER_WARNING);
+                    }
+
                     $resource = $this->_getResource($module, $controller, $action);
                     if (!$this->has($resource)) {
                         if ($this->_debug) print "\$this->addResource($resource);<br />\n";
