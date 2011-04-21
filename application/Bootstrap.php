@@ -195,9 +195,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * /
     protected function _initRoutes()
     {
-        $front = $this->getResource('frontController');
-        $router = $front->getRouter();
-        $router->addRoute(
+        $this->getResource('frontController')
+            ->getRouter()
+            ->addRoute(
             'image',
             new Zend_Controller_Router_Route_Regex(
                 'library/images/user/(\w+)\.(\d+x\d+|\w+)\.(\w+)',
