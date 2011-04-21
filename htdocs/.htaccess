@@ -14,7 +14,7 @@ RewriteRule ^.*$ - [L]
 
 RewriteCond {REQUEST_URI} !^/ajax(.*)$
 RewriteCond %{REQUEST_FILENAME} !\.(js|ico|txt|gif|jpg|png|css)$
-RewriteRule ^(.*)$ index.php?$1 [L]
+RewriteRule ^(.*)$ index.php?$1 [L,QSA]
 
 # ETags don't work in multi-server environments, don't use them
 # @see http://developer.yahoo.com/performance/rules.html#etags

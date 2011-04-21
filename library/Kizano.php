@@ -28,7 +28,7 @@
  *  @license    http://framework.zend.com/license/new-bsd     New BSD License
  *  @author     Markizano Draconus <markizano@markizano.net>
  */
-class Kizano extends Kp_Abstract
+class Kizano
 {
     /**
      *  Gets anything we need!
@@ -36,8 +36,8 @@ class Kizano extends Kp_Abstract
      *  @param string   $what   The name of the class to obtain.
      *  
      *  @return Mixed
-     * /
-    public static function get($name)
+     */
+    public static function getModel($name)
     {
         
     }//*/
