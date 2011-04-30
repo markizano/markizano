@@ -1,0 +1,3 @@
+[submodule "htdocs/assets/js/jQuery"]
+	path = htdocs/assets/js/jQuery
+	url = https://github.com/jquery/jquery.git
