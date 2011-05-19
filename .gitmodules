@@ -1,3 +1,6 @@
 [submodule "htdocs/assets/js/jQuery"]
 	path = htdocs/assets/js/jQuery
 	url = https://github.com/jquery/jquery.git
+[submodule "library/Kizano"]
+	path = library/Kizano
+	url = ssh://git@github.com/markizano/Kizano.git
