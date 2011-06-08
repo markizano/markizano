@@ -211,6 +211,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     2                => 'scale',
                     3                => 'ext',
                 )
+            )->addRoute(
+                'content',
+                new Zend_Controller_Router_Route_Regex(
+                    'content/(.*)',
+                    array(
+                        'module'        => 'default',
+                        'controller'    => 'content',
+                        'action'        => 'index',
+                    ),
+                    array(
+                        'slug'          => 1,
+                    )
+                )
             )
         );
     } //*/
